@@ -1,20 +1,21 @@
 import React from 'react';
-
-import sunrise from '../assets/sunrise.png';
+import { getImage } from '../services/imagePicker';
 
 const OverviewCard = ({ city, country, description, icon, weatherData, unitSystem }) => {
+
+    const image = getImage(icon);
     return (
         <section className=' flex flex-col justify-center items-center p-5 h-full bg-gray-50'>
-            <h3 className=' text-4xl font-bold'>{city}, {country}</h3>
+            <h3 className=' text-3xl font-bold'>{city}, {country}</h3>
             <h5 className=' text-2xl mt-2'>{description}</h5>
-            <div className=' flex flex-row justify-center items-center p-2'>
+            <div className=' w-full flex flex-row justify-center items-center p-2'>
                 <img 
-                    className=''
-                    src={`https://openweathermap.org/img/wn/${icon}@2x.png`} 
+                    className=' w-2/3 sm:w-full'
+                    src={image}
                     alt='humidity' 
                 />
             </div>
-            <h1 className=' text-6xl font-bold'>
+            <h1 className=' text-4xl font-bold'>
                 {
                     unitSystem === 'metric' 
                         ? Math.round(weatherData?.main?.temp)
@@ -25,7 +26,7 @@ const OverviewCard = ({ city, country, description, icon, weatherData, unitSyste
                     unitSystem === 'metric' ? 'C' : 'F'
                 }
             </h1>
-            <p className=' text-lg'>Feels like 
+            <p className=' text-xl'>Feels like &nbsp;
                 {
                     unitSystem === 'metric' 
                         ? Math.round(weatherData?.main?.temp)

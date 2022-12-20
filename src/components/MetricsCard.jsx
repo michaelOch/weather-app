@@ -9,7 +9,7 @@ const MetricsCard = ({ title, icon, metric, unit, className }) => {
                 </div>
                 <div className=' flex flex-col justify-center items-end'>
                     <h4 className=' text-md text-cyan-700 text-right'>{title}</h4>
-                    <h2 className=' text-3xl font-bold'>{metric}</h2>
+                    <h2 className=' text-2xl font-bold'>{metric}</h2>
                     <p className=''>{unit}</p>
                 </div>
             </div>

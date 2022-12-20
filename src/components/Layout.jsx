@@ -3,7 +3,6 @@ import axios from 'axios';
 import OverviewCard from './OverviewCard';
 import MetricsBox from './MetricsBox';
 
-import sunrise from '../assets/sunrise.png';
 import DateAndTime from './DateAndTime';
 import SearchBox from './SearchBox';
 import UnitSwitch from './UnitSwitch';
@@ -17,7 +16,7 @@ const Layout = () => {
     const [unitSystem, setUnitSystem] = useState("metric");
     const [fetchData, setFetchData] = useState(true);
     const [loading, setLoading] = useState(true);
-    const [err, setErr] = useState(false);
+    const [err, setErr] = useState('');
 
     const changeSystem = () => {
         if (unitSystem === 'metric') {
@@ -28,38 +27,37 @@ const Layout = () => {
     }
 
     useEffect(() => {
-        
-        try {
-            const getData = async () => {
-                setLoading(true);
-                const res = await axios.post(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_API_KEY}`)
-    
-                // console.log(res.data);
+
+        setLoading(true);
+        if (city === '') setCity('Geesthacht');
+
+        axios.post(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_API_KEY}`)
+            .then(res => {
                 setWeatherData(res.data);
-                // setCity('')
-
-                if (res && res.data) {
-                    setLoading(false);
-                }
-            }
-
-            getData();
-        } catch (error) {
-            setErr(true);
-        }
+                setCity('');
+                setErr('');
+                setLoading(false);
+            })
+            .catch(error => {
+                setCity('')
+                setLoading(false);
+                setErr(error?.response?.data?.message);
+            })
 
     }, [fetchData]);
 
-    // if (loading) return <Loading />
-
-    // if (weatherData && !weatherData.message) 
     return (
         <>
         {
             loading
                 ? <Loading />
-                : (err)
-                    ? <ErrorScreen city={city} onChange={(e) => setCity(e.target.value)} onKeyDown={(e) => e.keyCode === 13 && setFetchData(!fetchData)} />
+                : (err !== '')
+                    ? <ErrorScreen 
+                            message={err} 
+                            city={city} 
+                            onChange={(e) => setCity(e.target.value)} 
+                            onKeyDown={(e) => e.keyCode === 13 && setFetchData(!fetchData)} 
+                        />
                     :
         <section className=' flex flex-col lg:flex-row justify-start md:rounded-2xl bg-gray-200 shadow-xl overflow-hidden'>
             <div className=' w-full lg:w-1/3'>
@@ -97,10 +95,6 @@ const Layout = () => {
         }
         </>
     )
-
-    // if (weatherData && weatherData.message) return (
-    //     <ErrorScreen />
-    // )
 
 }
 
