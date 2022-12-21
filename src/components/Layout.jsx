@@ -8,8 +8,9 @@ import SearchBox from './SearchBox';
 import UnitSwitch from './UnitSwitch';
 import ErrorScreen from './ErrorScreen';
 import Loading from './Loading';
+import DarkModeIcon from './DarkModeIcon';
 
-const Layout = () => {
+const Layout = ({ darkMode, setDarkMode }) => {
     
     const [weatherData, setWeatherData] = useState();
     const [city, setCity] = useState("Geesthacht");
@@ -59,7 +60,7 @@ const Layout = () => {
                             onKeyDown={(e) => e.keyCode === 13 && setFetchData(!fetchData)} 
                         />
                     :
-        <section className=' flex flex-col lg:flex-row justify-start md:rounded-2xl bg-gray-200 shadow-xl overflow-hidden'>
+        <section className=' flex flex-col lg:flex-row justify-start md:rounded-2xl bg-gray-200 dark:bg-gray-900 dark:text-white shadow-xl overflow-hidden'>
             <div className=' w-full lg:w-1/3'>
                 <OverviewCard
                     city={weatherData?.name}
@@ -71,6 +72,12 @@ const Layout = () => {
                 />
             </div>
             <div className=' w-full lg:w-2/3 flex flex-col justify-center items-center flex-grow p-5'>
+                <div className=' w-full flex justify-end mb-3'>
+                    <DarkModeIcon
+                        darkMode={darkMode}
+                        setDarkMode={setDarkMode}
+                    />
+                </div>
                 <div className=' w-full flex flex-col sm:flex-row justify-between items-center mb-5'>
                     <DateAndTime 
                         weatherData={weatherData} 

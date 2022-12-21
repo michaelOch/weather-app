@@ -2,7 +2,7 @@ import React from 'react';
 
 const MetricsCard = ({ title, icon, metric, unit, className }) => {
     return (
-        <div className={`${className} flex flex-col justify-center p-5 rounded-xl bg-gray-50`}>
+        <div className={`${className} flex flex-col justify-center p-5 rounded-xl shadow-xl bg-gray-50 dark:bg-gray-800`}>
             <div className=' flex flex-row justify-between items-center'>
                 <div>
                     <img className=' w-1/3 sm:w-1/2' src={icon} alt='icon avatar' />

@@ -5,7 +5,7 @@ const OverviewCard = ({ city, country, description, icon, weatherData, unitSyste
 
     const image = getImage(icon);
     return (
-        <section className=' flex flex-col justify-center items-center p-5 h-full bg-gray-50'>
+        <section className=' flex flex-col justify-center items-center p-5 h-full bg-gray-50 dark:bg-gray-800'>
             <h3 className=' text-3xl font-bold'>{city}, {country}</h3>
             <h5 className=' text-2xl mt-2'>{description}</h5>
             <div className=' w-full flex flex-row justify-center items-center p-2'>
