@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Layout from './components/Layout';
 
 function App() {
 
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(localStorage.getItem('darkmode') ? localStorage.getItem('darkmode') : false);
+
+    useEffect(() => {
+
+        localStorage.setItem('darkmode', darkMode);
+    }, [darkMode]);
 
     return (
         <div className={darkMode ? 'dark' : ''}>
